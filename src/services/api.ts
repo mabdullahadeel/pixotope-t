@@ -4,8 +4,18 @@ import {
 } from "../types/pixotope.types";
 import { PIXOTOPE_GATEWAY_URL } from "../utils/constants";
 
+interface TRestResponse<TMessage> {
+  Topic: {
+    Type: string;
+    Target: string;
+    Source: string;
+    Name: string;
+  };
+  Message: TMessage;
+}
+
 export const api = {
-  publish: async (payload: PixotopePayload | PixotopePublishPayload) => {
+  publish: async <TRes>(payload: PixotopePayload | PixotopePublishPayload) => {
     const response = await fetch(`${PIXOTOPE_GATEWAY_URL}/publish`, {
       method: "POST",
       headers: {
@@ -13,6 +23,6 @@ export const api = {
       },
       body: JSON.stringify(payload),
     });
-    return response.json();
+    return (await response.json()) as Array<TRestResponse<TRes>>;
   },
 };
