@@ -23,7 +23,7 @@ export default function Home() {
       </Box>
       <Container h="100%" maxW="container.lg">
         <Flex h="100%" justifyContent="center" alignItems="center">
-          <Tabs variant="soft-rounded" colorScheme="orange" gap={1}>
+          <Tabs variant="soft-rounded" colorScheme="orange" gap={1} isLazy>
             <TabList>
               <Tab>Show Setting</Tab>
               <Tab>Cameras</Tab>
