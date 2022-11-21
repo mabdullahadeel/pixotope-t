@@ -11,7 +11,7 @@ interface Props {
 
 export const useSet = ({ topic }: Props) => {
   const set = useCallback(
-    async <TRes>(val: string) => {
+    async <TRes>(val: string | null) => {
       const payload = {
         ...{ ...topic, Type: "Set" },
         Value: val,
