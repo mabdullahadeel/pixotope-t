@@ -21,7 +21,7 @@ export default function Home() {
           <ThemeToggler />
         </Flex>
       </Box>
-      <Container h="100%" maxW="container.lg" minW="container.lg">
+      <Container h="100%" maxW="container.lg">
         <Flex h="100%" justifyContent="center" alignItems="center">
           <Tabs variant="soft-rounded" colorScheme="orange" gap={1}>
             <TabList>

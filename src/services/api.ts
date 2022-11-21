@@ -3,6 +3,7 @@ import {
   PixotopePublishPayload,
 } from "../types/pixotope.types";
 import { PIXOTOPE_GATEWAY_URL } from "../utils/constants";
+import { createQueryParamFromObj } from "../utils/objects";
 
 interface TRestResponse<TMessage> {
   Topic: {
@@ -24,5 +25,12 @@ export const api = {
       body: JSON.stringify(payload),
     });
     return (await response.json()) as Array<TRestResponse<TRes>>;
+  },
+  publishViaGet: async <TRes>(
+    payload: Record<string, string | number | boolean>
+  ) => {
+    const query = createQueryParamFromObj(payload);
+    const response = await fetch(`${PIXOTOPE_GATEWAY_URL}/publish?${query}`);
+    return (await response.json()) as TRes;
   },
 };

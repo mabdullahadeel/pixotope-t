@@ -7,16 +7,19 @@ import {
 
 interface Props {
   topic: Omit<PixotopePayload["Topic"], "Type">;
-  message: PixotopePublishPayload["Message"];
 }
 
-export const useSet = ({ topic, message }: Props) => {
-  const set = useCallback(async <TRes>() => {
-    return api.publish<TRes>({
-      Topic: { ...topic, Type: "Set" },
-      Message: message,
-    });
-  }, [topic, message]);
+export const useSet = ({ topic }: Props) => {
+  const set = useCallback(
+    async <TRes>(val: string) => {
+      const payload = {
+        ...{ ...topic, Type: "Set" },
+        Value: val,
+      };
+      return api.publishViaGet<TRes>(payload);
+    },
+    [topic]
+  );
 
   return set;
 };

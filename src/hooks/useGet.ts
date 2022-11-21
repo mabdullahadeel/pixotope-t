@@ -1,13 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useState, useEffect } from "react";
 import { api } from "../services/api";
-import { PixotopePayload } from "../types/pixotope.types";
+import {
+  PixotopePayload,
+  PixotopePublishPayload,
+} from "../types/pixotope.types";
 
 interface Props {
   topic: Omit<PixotopePayload["Topic"], "Type">;
   subscribe?: boolean;
   tick?: number;
-  select?: (data: Awaited<ReturnType<typeof api.publish>>) => any;
+  select?: (data: Awaited<ReturnType<typeof api.publishViaGet>>) => any;
 }
+
+type TGetRes = Awaited<Array<PixotopePublishPayload>>;
+
+const DEFAULT_TICK = 3000;
 
 export const useGet = <TVal = string>({
   topic,
@@ -22,9 +30,10 @@ export const useGet = <TVal = string>({
   const get = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.publish<{ Value: string }>({
-        Topic: { ...topic, Type: "Get" },
-      });
+      const payload = {
+        ...{ ...topic, Type: "Get" },
+      };
+      const response = await api.publishViaGet<TGetRes>(payload);
       setValue(select?.(response) || (response[0]?.Message.Value as TVal));
     } catch (error) {
       setError(error);
@@ -36,10 +45,10 @@ export const useGet = <TVal = string>({
   useEffect(() => {
     get();
     if (subscribe) {
-      const interval = setInterval(() => get(), tick || 1000);
+      const interval = setInterval(() => get(), tick || DEFAULT_TICK);
       return () => clearInterval(interval);
     }
-  }, [topic, subscribe, tick, get]);
+  }, [subscribe, tick]);
 
   return { value, error, loading };
 };
