@@ -42,13 +42,25 @@ export const useGet = <TVal = string>({
     }
   }, [topic]);
 
+  let interval: NodeJS.Timeout | null = null;
+
   useEffect(() => {
     get();
     if (subscribe) {
-      const interval = setInterval(() => get(), tick || DEFAULT_TICK);
-      return () => clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
+      interval = setInterval(() => get(), tick || DEFAULT_TICK);
     }
   }, [subscribe, tick]);
+
+  useEffect(() => {
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, []);
 
   return { value, error, loading };
 };

@@ -27,7 +27,7 @@ export const api = {
     return (await response.json()) as Array<TRestResponse<TRes>>;
   },
   publishViaGet: async <TRes>(
-    payload: Record<string, string | number | boolean>
+    payload: Record<string, string | number | boolean | null>
   ) => {
     const query = createQueryParamFromObj(payload);
     const response = await fetch(`${PIXOTOPE_GATEWAY_URL}/publish?${query}`);
