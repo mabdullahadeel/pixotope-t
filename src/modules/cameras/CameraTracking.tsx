@@ -1,14 +1,4 @@
-import {
-  Center,
-  Spinner,
-  Text,
-  Card,
-  CardBody,
-  Stack,
-  Flex,
-  Box,
-  Button,
-} from "@chakra-ui/react";
+import { Center, Spinner, Stack } from "@chakra-ui/react";
 import React from "react";
 import { useGet } from "../../hooks/useGet";
 import { TStateCameraResVal } from "../../types/camera-tracking.types";
