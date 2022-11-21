@@ -39,7 +39,7 @@ export const CameraTracking: React.FC<CameraTrackingProps> = ({}) => {
     <Stack spacing={2}>
       {Object.keys(value)?.map((key) => {
         const obj = value[key];
-        return <CameraCard key={key} camera={{ [key]: obj }} />;
+        return <CameraCard key={value[key].Name} camera={{ [key]: obj }} />;
       })}
     </Stack>
   );
