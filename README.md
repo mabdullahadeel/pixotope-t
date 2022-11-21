@@ -1,4 +1,4 @@
-# PixiClient
+# PixoClient
 
 This is browser based client app that use pixotope API gateway to handle settings.
 
